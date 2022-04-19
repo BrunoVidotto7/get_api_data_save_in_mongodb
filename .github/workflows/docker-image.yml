@@ -26,5 +26,19 @@ jobs:
           username: ${{secrets.DOCKER_USERNAME}}
           password: ${{secrets.DOCKER_PASSWORD}}
           
+      - name: Docker compose build
+        working-directory: .
+        run: docker-compose build
+          
       - name: Build the Docker image
         run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+        
+      - name: Push to Docker hub container registry
+        run: |
+          docker tag api_cicd_get-data-service:latest ${{secrets.DOCKER_USERNAME}}/api-to-mongodb:${{github.run_id}}
+          docker push ${{secrets.DOCKER_USERNAME}}/api-to-mongodb:${{github.run_id}}
+          
+      - name: Setup Python
+        uses: actions/setup-python@v3.1.2
+        with:
+          python-version: 3.8
