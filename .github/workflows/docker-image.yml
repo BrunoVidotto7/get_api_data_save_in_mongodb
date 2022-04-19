@@ -32,7 +32,7 @@ jobs:
         
       - name: Push to Docker hub container registry
         run: |
-          docker tag api_cicd_get-data-service:latest ${{secrets.DOCKER_USERNAME}}/api-to-mongodb:${{github.run_id}}
+          docker tag get_api_info_save_in_mongodb_get-data-service:latest ${{secrets.DOCKER_USERNAME}}/api-to-mongodb:${{github.run_id}}
           docker push ${{secrets.DOCKER_USERNAME}}/api-to-mongodb:${{github.run_id}}
           
       - name: Setup Python
